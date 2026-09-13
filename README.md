@@ -2,6 +2,8 @@
 
 我的第一个 GitHub 项目 🎉
 
+> 🌐 **在线网页**：本仓库自带一个落地页，已通过 GitHub Pages 部署 —— 仓库主页右侧 **About/Deployments** 或本文件顶部的链接即可访问。
+
 ## 这是什么
 
 这是一个用 DeepSeek Harness 帮忙创建的示例项目，用来演示：
@@ -15,6 +17,7 @@
 | 文件 | 说明 |
 |------|------|
 | `README.md` | 项目介绍（就是你正在看的这个） |
+| `index.html` | 项目落地页（GitHub Pages 在线预览） |
 | `hello.py` | 一个简单的 Python 问候程序 |
 | `.gitignore` | 告诉 Git 忽略哪些文件 |
 

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hello-git · 我的第一个 GitHub 项目</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --accent2: #bc8cff;
+      --green: #3fb950;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 动态背景光晕 */
+    .glow {
+      position: fixed;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+      pointer-events: none;
+      animation: float 12s ease-in-out infinite;
+    }
+    .glow.a { background: var(--accent); top: -200px; left: -150px; }
+    .glow.b { background: var(--accent2); bottom: -250px; right: -150px; animation-delay: -6s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.15); }
+    }
+
+    .container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+    header { text-align: center; padding: 80px 0 40px; position: relative; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .badge .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(63, 185, 80, 0.5); }
+      50% { box-shadow: 0 0 0 8px rgba(63, 185, 80, 0); }
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(120deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* 按钮组 */
+    .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 26px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(88, 166, 255, 0.25);
+    }
+    .btn.primary {
+      background: linear-gradient(120deg, #1f6feb, #8957e5);
+      border-color: transparent;
+      color: #fff;
+    }
+    .btn.primary:hover { box-shadow: 0 8px 28px rgba(137, 87, 229, 0.4); }
+
+    /* 卡片区 */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin: 60px 0;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .card:hover { transform: translateY(-6px); border-color: var(--accent); }
+    .card .icon { font-size: 34px; margin-bottom: 14px; }
+    .card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* 终端演示块 */
+    .terminal {
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin: 40px 0 70px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+    .term-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 16px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+    .term-bar span {
+      width: 12px; height: 12px; border-radius: 50%;
+    }
+    .r { background: #ff5f57; } .y { background: #febc2e; } .g { background: #28c840; }
+    .term-title { margin-left: auto; color: var(--muted); font-size: 13px; font-family: Consolas, monospace; }
+
+    .term-body {
+      padding: 22px;
+      font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+    .line { opacity: 0; animation: typeIn 0.4s forwards; }
+    .line:nth-child(1) { animation-delay: 0.3s; }
+    .line:nth-child(2) { animation-delay: 1.2s; }
+    .line:nth-child(3) { animation-delay: 2.1s; }
+    .line:nth-child(4) { animation-delay: 3.0s; }
+    .line:nth-child(5) { animation-delay: 3.9s; }
+    .line:nth-child(6) { animation-delay: 4.8s; }
+    @keyframes typeIn { to { opacity: 1; } }
+    .prompt { color: var(--green); }
+    .cmd { color: var(--text); }
+    .out { color: var(--muted); }
+    .hl { color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 16px;
+      background: var(--green);
+      vertical-align: -2px;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+</head>
+<body>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+
+  <header class="container">
+    <div class="badge"><span class="dot"></span>已部署在 GitHub Pages · 持续构建中</div>
+    <h1>你好，GitHub！👋</h1>
+    <p class="subtitle">
+      这是 <strong>hello-git</strong> —— 我的第一个 GitHub 项目。<br>
+      由 <a href="https://github.com/z13660" style="color: var(--accent);">z13660</a> 创建，AI 帮忙搭建。
+    </p>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/z13660/hello-git" target="_blank">⭐ 查看仓库</a>
+      <a class="btn" href="https://github.com/z13660?tab=repositories" target="_blank">📦 我的其它项目</a>
+      <a class="btn" href="mailto:z13660@users.noreply.github.com">✉️ 联系我</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="cards">
+      <div class="card">
+        <div class="icon">🚀</div>
+        <h3>从零开始</h3>
+        <p>这个项目演示了初始化本地 Git 仓库、编写文件、提交并推送到 GitHub 的完整流程。</p>
+      </div>
+      <div class="card">
+        <div class="icon">🐍</div>
+        <h3>Hello, Python</h3>
+        <p>仓库里还有一个简单的 Python 问候程序 <code>hello.py</code>，欢迎 clone 下来跑一跑。</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎨</div>
+        <h3>纯手写网页</h3>
+        <p>本页面是单个 HTML 文件，零依赖、零框架，动画效果全部用原生 CSS 实现。</p>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="term-bar">
+        <span class="r"></span><span class="y"></span><span class="g"></span>
+        <span class="term-title">git-bash — hello-git</span>
+      </div>
+      <div class="term-body">
+        <div class="line"><span class="prompt">$</span> <span class="cmd">git init</span></div>
+        <div class="line out">Initialized empty Git repository in Z:/it/hello-git/.git/</div>
+        <div class="line"><span class="prompt">$</span> <span class="cmd">git add . && git commit -m <span class="hl">"Initial commit"</span></span></div>
+        <div class="line out">[main (root-commit) a9f8f31] Initial commit: hello-git 示例项目</div>
+        <div class="line"><span class="prompt">$</span> <span class="cmd">git push -u origin main</span></div>
+        <div class="line out">✓ 推送成功 → <span class="hl">https://github.com/z13660/hello-git</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="container">
+    <p>Made with ❤️ &amp; Git · <a href="https://github.com/z13660/hello-git">z13660/hello-git</a> · 用 <a href="https://pages.github.com" target="_blank">GitHub Pages</a> 免费托管</p>
+  </footer>
+</body>
+</html>
