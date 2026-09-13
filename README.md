@@ -2,7 +2,7 @@
 
 我的第一个 GitHub 项目 🎉
 
-> 🌐 **在线网页**：本仓库自带一个落地页，已通过 GitHub Pages 部署 —— 仓库主页右侧 **About/Deployments** 或本文件顶部的链接即可访问。
+> 🌐 **在线网页**：[https://z13660.github.io/hello-git/](https://z13660.github.io/hello-git/) —— 由 GitHub Pages 自动部署，每次 push 自动更新。
 
 ## 这是什么
 
